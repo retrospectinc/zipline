@@ -58,6 +58,8 @@ module Zipline
         {file: File.open(file.file)}
       elsif is_url?(file)
         {url: file}
+      elsif file[:data]
+        {data: file[:data]}
       else
         raise(ArgumentError, "Bad File/Stream for #{file.inspect} (#{file.class})")
       end
@@ -78,6 +80,8 @@ module Zipline
           file[:file].close
         elsif file[:blob]
           file[:blob].download { |chunk| writer_for_file << chunk }
+        elsif file[:data]
+          writer_for_file << file[:data]
         else
           raise(ArgumentError, 'Bad File/Stream')
         end
