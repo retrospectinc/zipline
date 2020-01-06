@@ -66,6 +66,10 @@ module Zipline
     end
 
     def write_file(streamer, file, name, options)
+      if (file[:file])
+        # Record existing permissions
+        options[:permissions] = File.stat(file[:file]).mode & 07777
+      end
       streamer.write_deflated_file(name, options) do |writer_for_file|
         if file[:url]
           the_remote_uri = URI(file[:url])
