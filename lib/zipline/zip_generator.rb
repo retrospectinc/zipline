@@ -59,7 +59,7 @@ module Zipline
       elsif is_url?(file)
         {url: file}
       else
-        raise(ArgumentError, 'Bad File/Stream')
+        raise(ArgumentError, "Bad File/Stream for #{file.inspect} (#{file.class})")
       end
     end
 
